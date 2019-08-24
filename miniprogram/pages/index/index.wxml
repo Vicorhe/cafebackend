@@ -1,2 +1,2 @@
 <!--miniprogram/pages/index.wxml-->
-<text>miniprogram/pages/index.wxml</text>
+<button bindtap="onTapMemberUpgrade">会员升级</button>

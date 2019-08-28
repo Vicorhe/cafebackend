@@ -20,7 +20,7 @@
 		"nodeModules": true
 	},
 	"appid": "wx8de8414b1bd7a9aa",
-	"projectname": "vipmaker",
+	"projectname": "cafebackend",
 	"libVersion": "2.2.5",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},

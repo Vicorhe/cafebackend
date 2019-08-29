@@ -1,5 +1,14 @@
 <!--miniprogram/pages/index.wxml-->
 <button bindtap="onTapMemberUpgrade">会员升级</button>
-<text>ACCESS TOKEN: {{access_token}} expires at {{expires_time}}</text>
+<button bindtap="onTapIncreasePoints">增加积分</button>
+<van-cell-group>
+  <van-field
+    value="{{ value }}"
+    type="number"
+    placeholder="增加积分数量"
+    border="{{ true }}"
+    bind:change="onChange"
+  />
+</van-cell-group><text>ACCESS TOKEN: {{access_token}} expires at {{expires_time}}</text>
 
 <button bindtap="temp">click</button>

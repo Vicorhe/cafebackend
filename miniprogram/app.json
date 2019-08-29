@@ -9,5 +9,8 @@
     "navigationBarTitleText": "AIA微咖啡 后台",
     "navigationBarTextStyle": "black"
   },
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {
+    "van-field": "vant/dist/field/index"
+  }
 }

@@ -8,6 +8,7 @@ Page({
     access_token: '',
     expires_time: 0,
     products: [],
+    value: 0
   },
 
   /**
@@ -79,6 +80,38 @@ Page({
     .then(res => {
       var products = res.result.data.map(s => JSON.parse(s));
       this.setData({ products: products });
+    })
+    .catch(console.log);
+  },
+
+  onChange: function (e) {
+    this.setData({ value: e.detail });
+  },
+
+  onTapIncreasePoints: function () {
+    var that = this;
+    wx.scanCode({
+      onlyFromCamera: false,
+      scanType: ['qrCode'],
+      success: function (res) {
+        that.incrementPoints(res.result);
+      },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
+  },
+
+  incrementPoints: function (id) {
+    wx.cloud.callFunction({
+      name: "incrementpoints",
+      data: {
+        access_token: this.data.access_token,
+        id: id,
+        amount: this.data.value
+      }
+    })
+    .then(res => {
+      console.log(res)
     })
     .catch(console.log);
   },

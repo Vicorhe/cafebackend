@@ -1,2 +1,5 @@
 <!--miniprogram/pages/index.wxml-->
 <button bindtap="onTapMemberUpgrade">会员升级</button>
+<text>ACCESS TOKEN: {{access_token}} expires at {{expires_time}}</text>
+
+<button bindtap="temp">click</button>

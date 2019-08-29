@@ -67,7 +67,7 @@ Page({
         });
       })
       .catch(console.log);
-    }
+    } else { console.log('old token still valid') }
   },
 
   temp:function () {

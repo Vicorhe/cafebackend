@@ -70,8 +70,22 @@ Page({
     } else { console.log('old token still valid') }
   },
 
-  temp:function () {
+  fetchProducts: function() {
     this.getValidAccessToken();
+    wx.cloud.callFunction({
+      name: "readproducts",
+      data: { access_token: this.data.access_token },
+    })
+    .then(res => {
+      var products = res.result.data.map(s => JSON.parse(s));
+      this.setData({ products: products });
+    })
+    .catch(console.log);
+  },
+
+
+  temp:function () {
+    this.fetchProducts();
   }
 
 })

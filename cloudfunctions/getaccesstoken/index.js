@@ -11,8 +11,10 @@ exports.main = async (event, context) => {
     url: `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${APPID}&secret=${APPSECRET}`,
     method: 'GET'
   });
+
   let xml = res.toString("utf-8");
   const response = JSON.parse(res);
+  
   return {
     response
   }

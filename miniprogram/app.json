@@ -16,6 +16,7 @@
     "van-switch": "vant/dist/switch/index",
     "van-stepper": "vant/dist/stepper/index",
     "van-collapse": "vant/dist/collapse/index",
-    "van-collapse-item": "vant/dist/collapse-item/index"
+    "van-collapse-item": "vant/dist/collapse-item/index",
+    "van-switch-cell": "vant/dist/switch-cell/index"
   }
 }

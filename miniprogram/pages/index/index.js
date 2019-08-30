@@ -50,6 +50,7 @@ Page({
   },
 
   onTapMemberUpgrade: function () {
+    this.getValidAccessToken();
     var that = this;
     wx.scanCode({
       onlyFromCamera: false,
@@ -84,6 +85,7 @@ Page({
   },
 
   onTapUpdateMemberPoints: function () {
+    this.getValidAccessToken();
     var that = this;
     wx.scanCode({
       onlyFromCamera: false,
@@ -117,14 +119,14 @@ Page({
   fetchProducts: function() {
     this.getValidAccessToken();
     wx.cloud.callFunction({
-      name: "readproducts",
+      name: "fetchproducts",
       data: { access_token: this.data.access_token },
     })
     .then(res => {
       var products = res.result.data.map(s => JSON.parse(s));
       this.setData({ products: products });
     })
-    .catch(console.log);
+    .catch(err => console.log(err));
   },
 
   tapDrink: function (e) {
@@ -135,10 +137,6 @@ Page({
       show: true,
       product: product
     });
-  },
-
-  temp:function () {
-    this.fetchProducts();
   },
 
   setProductStatus: function (){

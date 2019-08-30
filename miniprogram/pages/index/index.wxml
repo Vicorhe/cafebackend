@@ -13,23 +13,20 @@
         bind:change="onDeltaChange"
       />
     </view>
-    
-
     <button bindtap="onTapUpdateMemberPoints">扫用户二维码</button>
   </van-collapse-item>
-  <van-collapse-item title="商品上下架" name="3">
+  <van-collapse-item title="商品上下架" name="3" bindtap="fetchProducts">
+    <block wx:for="{{products}}" wx:key="index">
+      <view data-id="{{item._id}}" catchtap="tapDrink">
+        {{item.name}} {{item.in_stock ? '有货' : '售磬'}} 
+      </view>
+    </block>
+
 
   </van-collapse-item>
 </van-collapse>
 
 
-<button bindtap="temp">click</button>
-
-<block wx:for="{{products}}" wx:key="index">
-  <view data-id="{{item._id}}" catchtap="tapDrink">
-     {{item.name}} {{item.in_stock ? '有货' : '售磬'}} 
-  </view>
-</block>
 
 <van-dialog
   use-slot

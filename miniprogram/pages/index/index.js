@@ -5,7 +5,7 @@ Page({
    */
   data: {
     access_token: '',
-    expires_time: 0,
+    expiration_time: 0,
     products: [],
     product: {},
     value: 0,
@@ -17,11 +17,28 @@ Page({
    * Lifecycle function--Called when page load
    */
   onLoad: function () {
-    this.getValidAccessToken();
   },
 
   onShow: function () {
     this.getValidAccessToken();
+  },
+
+  getValidAccessToken: function () {
+    const now = Date.now();
+    if (this.data.expiration_time < now) {
+      console.log('new access token');
+      wx.cloud.callFunction({
+        name: "getaccesstoken",
+        data: {}
+      })
+      .then(res => {
+        this.setData({
+          access_token: res.result.response.access_token,
+          expiration_time: res.result.response.expires_in * 761 + Date.now()
+        });
+      })
+      .catch(err => console.log(err));
+    } else { console.log('old token still valid') }
   },
 
   onTapMemberUpgrade: function () {
@@ -51,25 +68,7 @@ Page({
         mask: true,
       });
     })
-    .catch(err => console.log(err))
-  },
-
-  getValidAccessToken: function () {
-    const now = Date.now();
-    if (this.data.expires_time < now){
-      console.log('new access token');
-      wx.cloud.callFunction({
-        name: "getaccesstoken",
-        data: {}
-      })
-      .then(res => {
-        this.setData({
-          access_token: res.result.response.access_token,
-          expires_time: res.result.response.expires_in * 761 + Date.now()
-        });
-      })
-      .catch(console.log);
-    } else { console.log('old token still valid') }
+    .catch(err => console.log(err));
   },
 
   fetchProducts: function() {

@@ -31,17 +31,16 @@ Page({
       scanType: ['qrCode'],
       success: function(res) {
         that.upgradeMember(res.result);
-      },
-      fail: function(res) {},
-      complete: function(res) {},
-    })
+      }
+    });
   },
 
-  upgradeMember: function (id) {
+  upgradeMember: function (userID) {
     wx.cloud.callFunction({ 
       name: "memberupgrade",
       data: {
-        id: id
+        access_token: this.data.access_token,
+        user_doc_id: userID,
       }
     })
     .then(res => {

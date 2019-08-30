@@ -4,11 +4,13 @@ Page({
    * Page initial data
    */
   data: {
+    activeName: '',
+
     access_token: '',
     expiration_time: 0,
     products: [],
     product: {},
-    value: 0,
+    delta: 0,
     show: false,
     newStatus: true,
   },
@@ -41,6 +43,12 @@ Page({
     } else { console.log('old token still valid') }
   },
 
+  onChange(event) {
+    this.setData({
+      activeName: event.detail
+    });
+  },
+
   onTapMemberUpgrade: function () {
     var that = this;
     wx.scanCode({
@@ -71,6 +79,41 @@ Page({
     .catch(err => console.log(err));
   },
 
+  onDeltaChange: function (e) {
+    this.setData({ delta: e.detail });
+  },
+
+  onTapUpdateMemberPoints: function () {
+    var that = this;
+    wx.scanCode({
+      onlyFromCamera: false,
+      scanType: ['qrCode'],
+      success: function (res) {
+        that.updatePoints(res.result);
+      }
+    })
+  },
+
+  updatePoints: function (userID) {
+    wx.cloud.callFunction({
+      name: "updatepoints",
+      data: {
+        access_token: this.data.access_token,
+        user_doc_id: userID,
+        delta: this.data.delta
+      }
+    })
+    .then(res => {
+      wx.showToast({
+        title: '成功更改会员积分',
+        icon: 'success',
+        duration: 3000,
+        mask: true,
+      });
+    })
+    .catch(err => console.log(err));
+  },
+
   fetchProducts: function() {
     this.getValidAccessToken();
     wx.cloud.callFunction({
@@ -84,10 +127,6 @@ Page({
     .catch(console.log);
   },
 
-  onChange: function (e) {
-    this.setData({ value: e.detail });
-  },
-
   tapDrink: function (e) {
     var prod_id = e.currentTarget.dataset.id;
     var product = this.data.products.filter(product => product._id == prod_id)[0];
@@ -97,35 +136,6 @@ Page({
       product: product
     });
   },
-
-  onTapIncreasePoints: function () {
-    var that = this;
-    wx.scanCode({
-      onlyFromCamera: false,
-      scanType: ['qrCode'],
-      success: function (res) {
-        that.incrementPoints(res.result);
-      },
-      fail: function (res) { },
-      complete: function (res) { },
-    })
-  },
-
-  incrementPoints: function (id) {
-    wx.cloud.callFunction({
-      name: "incrementpoints",
-      data: {
-        access_token: this.data.access_token,
-        id: id,
-        amount: this.data.value
-      }
-    })
-    .then(res => {
-      console.log(res)
-    })
-    .catch(console.log);
-  },
-
 
   temp:function () {
     this.fetchProducts();

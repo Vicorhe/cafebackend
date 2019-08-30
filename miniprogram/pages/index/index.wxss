@@ -1,4 +1,13 @@
-/* miniprogram/pages/index.wxss */
-.toggle-form {
-  z-index: 777;
+.delta-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 10px;
 }
+
+.delta-label {
+  font-size: 1.7em;
+  font-weight: bold;
+  padding-right: 16px;
+}
+

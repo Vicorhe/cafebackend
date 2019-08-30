@@ -1,15 +1,27 @@
-<!--miniprogram/pages/index.wxml-->
-<button bindtap="onTapMemberUpgrade">会员升级</button>
-<button bindtap="onTapIncreasePoints">增加积分</button>
-<van-cell-group>
-  <van-field
-    value="{{ value }}"
-    type="number"
-    placeholder="增加积分数量"
-    border="{{ true }}"
-    bind:change="onChange"
-  />
-</van-cell-group>
+<van-collapse value="{{ activeName }}" bind:change="onChange" accordion>
+  <van-collapse-item title="会员升级" name="1">
+    <button bindtap="onTapMemberUpgrade">扫用户二维码</button>
+  </van-collapse-item>
+  <van-collapse-item title="更改积分" name="2">
+    <view class="delta-row">
+      <view class="delta-label">积分变值:</view>
+      <van-stepper
+        value="{{ delta }}"
+        integer
+        min="-10"
+        max="10"
+        bind:change="onDeltaChange"
+      />
+    </view>
+    
+
+    <button bindtap="onTapUpdateMemberPoints">扫用户二维码</button>
+  </van-collapse-item>
+  <van-collapse-item title="商品上下架" name="3">
+
+  </van-collapse-item>
+</van-collapse>
+
 
 <button bindtap="temp">click</button>
 

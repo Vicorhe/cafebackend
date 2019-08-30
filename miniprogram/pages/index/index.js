@@ -1,6 +1,5 @@
-// miniprogram/pages/index.js
+import Dialog from '../../vant/dist/dialog/dialog';
 Page({
-
   /**
    * Page initial data
    */
@@ -8,7 +7,10 @@ Page({
     access_token: '',
     expires_time: 0,
     products: [],
-    value: 0
+    product: {},
+    value: 0,
+    show: false,
+    newStatus: true,
   },
 
   /**
@@ -88,6 +90,16 @@ Page({
     this.setData({ value: e.detail });
   },
 
+  tapDrink: function (e) {
+    var prod_id = e.currentTarget.dataset.id;
+    var product = this.data.products.filter(product => product._id == prod_id)[0];
+
+    this.setData({
+      show: true,
+      product: product
+    });
+  },
+
   onTapIncreasePoints: function () {
     var that = this;
     wx.scanCode({
@@ -119,6 +131,21 @@ Page({
 
   temp:function () {
     this.fetchProducts();
-  }
+  },
 
+  setProductStatus: function (){
+    wx.cloud.callFunction({
+      name: "setproductstatus",
+      data: {
+        access_token: this.data.access_token,
+        id: this.data.product._id,
+        status: this.data.newStatus
+      }
+    })
+    .then(res => {
+      console.log(res);
+      this.fetchProducts();
+    })
+    .catch(console.log);
+  },
 })

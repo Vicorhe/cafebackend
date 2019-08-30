@@ -9,6 +9,31 @@
     border="{{ true }}"
     bind:change="onChange"
   />
-</van-cell-group><text>ACCESS TOKEN: {{access_token}} expires at {{expires_time}}</text>
+</van-cell-group>
 
 <button bindtap="temp">click</button>
+
+<block wx:for="{{products}}" wx:key="index">
+  <view data-id="{{item._id}}" catchtap="tapDrink">
+     {{item.name}} {{item.in_stock ? '有货' : '售磬'}} 
+  </view>
+</block>
+
+<van-dialog
+  use-slot
+  title="{{product.name}}"
+  show="{{ show }}"
+  show-cancel-button
+  bind:confirm="setProductStatus"
+> 
+  <view class="toggle-form">
+    {{product.in_stock ? '有货' : '售磬'}} 
+    上架
+    <van-switch
+      checked="{{ newStatus }}"
+      active-color="#07c160"
+      inactive-color="#f44"
+    />
+    下架
+  </view>
+</van-dialog>

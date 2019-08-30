@@ -11,6 +11,8 @@
   },
   "sitemapLocation": "sitemap.json",
   "usingComponents": {
-    "van-field": "vant/dist/field/index"
+    "van-field": "vant/dist/field/index",
+    "van-dialog": "vant/dist/dialog/index",
+    "van-switch": "vant/dist/switch/index"
   }
 }

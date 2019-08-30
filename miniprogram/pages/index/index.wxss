@@ -1,1 +1,4 @@
 /* miniprogram/pages/index.wxss */
+.toggle-form {
+  z-index: 777;
+}

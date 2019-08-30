@@ -15,34 +15,16 @@
     </view>
     <button bindtap="onTapUpdateMemberPoints">扫用户二维码</button>
   </van-collapse-item>
-  <van-collapse-item title="商品上下架" name="3" bindtap="fetchProducts">
+  <van-collapse-item title="商品上下架" name="3" bindtap="initialFetchProducts">
     <block wx:for="{{products}}" wx:key="index">
-      <view data-id="{{item._id}}" catchtap="tapDrink">
-        {{item.name}} {{item.in_stock ? '有货' : '售磬'}} 
-      </view>
+      <van-switch-cell
+        title="{{item.name}}"
+        checked="{{ item.in_stock }}"
+        data-index="{{ index }}"
+        bind:change="onStatusChange"
+      />
     </block>
-
-
   </van-collapse-item>
 </van-collapse>
 
 
-
-<van-dialog
-  use-slot
-  title="{{product.name}}"
-  show="{{ show }}"
-  show-cancel-button
-  bind:confirm="setProductStatus"
-> 
-  <view class="toggle-form">
-    {{product.in_stock ? '有货' : '售磬'}} 
-    上架
-    <van-switch
-      checked="{{ newStatus }}"
-      active-color="#07c160"
-      inactive-color="#f44"
-    />
-    下架
-  </view>
-</van-dialog>

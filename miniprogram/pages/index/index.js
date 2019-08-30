@@ -5,14 +5,10 @@ Page({
    */
   data: {
     activeName: '',
-
     access_token: '',
     expiration_time: 0,
     products: [],
-    product: {},
     delta: 0,
-    show: false,
-    newStatus: true,
   },
 
   /**
@@ -116,6 +112,10 @@ Page({
     .catch(err => console.log(err));
   },
 
+  initialFetchProducts: function () {
+    if (this.data.products.length == 0) this.fetchProducts();
+  },
+
   fetchProducts: function() {
     this.getValidAccessToken();
     wx.cloud.callFunction({
@@ -129,29 +129,21 @@ Page({
     .catch(err => console.log(err));
   },
 
-  tapDrink: function (e) {
-    var prod_id = e.currentTarget.dataset.id;
-    var product = this.data.products.filter(product => product._id == prod_id)[0];
-
-    this.setData({
-      show: true,
-      product: product
-    });
-  },
-
-  setProductStatus: function (){
+  onStatusChange: function (e) {
+    this.getValidAccessToken();
+    const newStatus = e.detail;
+    const productID = this.data.products[e.target.dataset.index]._id;
     wx.cloud.callFunction({
       name: "setproductstatus",
       data: {
         access_token: this.data.access_token,
-        id: this.data.product._id,
-        status: this.data.newStatus
+        product_id: productID,
+        new_status: newStatus
       }
     })
     .then(res => {
-      console.log(res);
       this.fetchProducts();
     })
-    .catch(console.log);
+    .catch(err => console.log(err));
   },
 })
